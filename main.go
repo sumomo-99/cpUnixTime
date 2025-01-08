@@ -5,19 +5,17 @@ import (
 	"os"
 	"time"
 
-	"golang.design/x/clipboard"
+	"github.com/atotto/clipboard"
 )
 
 func copyUnixTume() error {
-	err := clipboard.Init()
-	if err != nil {
-		return fmt.Errorf("Failed to initialize the clipboard: %w", err)
-	}
-
 	unixTime := time.Now().Unix()
 	unixTimeStr := fmt.Sprintf("%d", unixTime)
 
-	clipboard.Write(clipboard.FmtText, []byte(unixTimeStr))
+	err := clipboard.WriteAll(unixTimeStr)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
